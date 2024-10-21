@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revvo</title>
+    <link rel="icon" href="lgoo.png" type="image/x-icon"> <!-- Change to the correct path if necessary -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('back vehi.jpg'); /* Change to your background image */
+            background-size: cover;
+            background-position: center;
+            color: black; /* Change text color for better readability */
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: white; /* Ensure the header text is white */
+        }
+        .nav-links {
+            margin: 10px 0;
+        }
+        .nav-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .vehicle-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .vehicle-box {
+            width: 200px; /* Increased width */
+            height: 300px; /* Increased height */
+            margin: 15px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: white; /* Solid background */
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Added shadow for depth */
+        }
+        .vehicle-box img {
+            width: 100%;
+            height: 150px; /* Adjusted height to fit better */
+            object-fit: contain; /* Prevents image zooming and cropping */
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .vehicle-box.selected {
+            border-color: #333;
+            background-color: rgba(240, 240, 240, 0.9);
+        }
+        .vehicle-box p {
+            margin: 5px 0;
+            font-weight: 500; /* Added bold for better visibility */
+        }
+        .proceed-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            border-radius: 8px; /* Rounded corners */
+        }
+        .proceed-button:hover {
+            background-color: #555;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 500px; /* Adjust as necessary */
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        .bill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .bill-table th, .bill-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .bill-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="lgoo.png" alt="Revvo Logo" style="height: 50px;"> <!-- Change to your logo -->
+        <h1>Revvo</h1>
+        <div class="nav-links">
+            <a href="front.html">Home</a>
+            <a href="vehicles.html">Vehicles</a>
+            <a href="review.html">Reviews</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </div>
+
+    <!-- Vehicle Selection -->
+    <div class="vehicle-selection">
+        <!-- Cycles -->
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Cycle 1', 2000, 100)">
+            <img src="cycle1.png" alt="Cycle 1">
+            <p>Cycle 1</p>
+            <p>Fare: ₹100/day</p>
+        </div>
+       
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Cycle 3', 2000, 100)">
+            <img src="cycle3.png" alt="Cycle 3">
+            <p>Cycle 2</p>
+            <p>Fare: ₹200/day</p>
+        </div>
+        
+        <!-- Scooties -->
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Scooty 1', 10000, 200)">
+            <img src="scooty1.png" alt="Scooty 1">
+            <p>Scooty 1</p>
+            <p>Fare: ₹200/day</p>
+        </div>
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Scooty 2', 10000, 200)">
+            <img src="scooty2.png" alt="Scooty 2">
+            <p>Scooty 2</p>
+            <p>Fare: ₹200/day</p>
+        </div>
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Scooty 3', 10000, 200)">
+            <img src="scooty3.png" alt="Scooty 3">
+            <p>Scooty 3</p>
+            <p>Fare: ₹200/day</p>
+        </div>
+        
+        <!-- Bikes -->
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Bike 1', 15000, 300)">
+            <img src="bike1.png" alt="Bike 1">
+            <p>Bike 1</p>
+            <p>Fare: ₹800/day</p>
+        </div>
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Bike 2', 15000, 300)">
+            <img src="bike2.png" alt="Bike 2">
+            <p>Bike 2</p>
+            <p>Fare: ₹700/day</p>
+        </div>
+        
+
+        <!-- Cars -->
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Car 1', 50000, 400)">
+            <img src="car1.png" alt="Car 1">
+            <p>Car 1</p>
+            <p>Fare: ₹1400/day</p>
+        </div>
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Car 2', 50000, 400)">
+            <img src="car2.png" alt="Car 2">
+            <p>Car 2</p>
+            <p>Fare: ₹1700/day</p>
+        </div>
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Car 3', 50000, 400)">
+            <img src="car3.png" alt="Car 3">
+            <p>Car 3</p>
+            <p>Fare: ₹2000/day</p>
+        </div>
+
+        <!-- Luxury Cars -->
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Luxury Car 1', 100000, 500)">
+            <img src="luxurycar1.png" alt="Luxury Car 1">
+            <p>Luxury Car 1</p>
+            <p>Fare: ₹10000/day</p>
+        </div>
+        <div class="vehicle-box" onclick="selectVehicle(this, 'Luxury Car 2', 100000, 500)">
+            <img src="luxurycar2.png" alt="Luxury Car 2">
+            <p>Luxury Car 2</p>
+            <p>Fare: ₹15000/day</p>
+        </div>
+        
+    </div>
+
+    <button class="proceed-button" id="proceedButton" onclick="openBookingModal()">Proceed to Booking</button>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+            <h2>Booking Details</h2>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone No:</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="pickup">Pickup Point:</label>
+                <input type="text" id="pickup" required>
+            </div>
+            <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" required>
+                <input type="time" id="startTime" required>
+            </div>
+            <div class="form-group">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" required>
+                <input type="time" id="endTime" required>
+            </div>
+            <button onclick="generateBill()">Generate Bill</button>
+        </div>
+    </div>
+
+    <!-- Bill Modal -->
+    <div id="billModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('billModal')">&times;</span>
+            <h2>Bill Summary</h2>
+            <table class="bill-table" id="billTable">
+                <thead>
+                    <tr>
+                        <th>Vehicle</th>
+                        <th>Fare/Day</th>
+                        <th>Number of Days</th>
+                        <th>Total Fare</th>
+                    </tr>
+                </thead>
+                <tbody id="billTableBody">
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">GST (18%)</td>
+                        <td id="gstAmount"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><strong>Grand Total</strong></td>
+                        <td id="grandTotal"></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <button onclick="makePayment()">Make a Payment</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedVehicles = [];
+        let totalDays = 0;
+
+        function selectVehicle(element, name, fare, duration) {
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedVehicles = selectedVehicles.filter(vehicle => vehicle.name !== name);
+            } else {
+                element.classList.add('selected');
+                selectedVehicles.push({ name, fare, duration });
+            }
+        }
+
+        function openBookingModal() {
+            if (selectedVehicles.length === 0) {
+                alert("Please select at least one vehicle.");
+                return;
+            }
+            document.getElementById('bookingModal').style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function generateBill() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const pickup = document.getElementById('pickup').value;
+            const startDate = new Date(document.getElementById('startDate').value + ' ' + document.getElementById('startTime').value);
+            const endDate = new Date(document.getElementById('endDate').value + ' ' + document.getElementById('endTime').value);
+            
+            if (!name || !phone || !email || !pickup || !startDate || !endDate) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Calculate total days
+            totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+            const billTableBody = document.getElementById('billTableBody');
+            billTableBody.innerHTML = ''; // Clear previous entries
+
+            let totalFare = 0;
+
+            selectedVehicles.forEach(vehicle => {
+                const fare = vehicle.fare * totalDays;
+                totalFare += fare;
+                billTableBody.innerHTML += 
+                    <tr>
+                        <td>${vehicle.name}</td>
+                        <td>₹${vehicle.fare}</td>
+                        <td>${totalDays}</td>
+                        <td>₹${fare}</td>
+                    </tr>
+                ;
+            });
+
+            const gst = totalFare * 0.18;
+            const grandTotal = totalFare + gst;
+
+            document.getElementById('gstAmount').innerText = ₹${gst.toFixed(2)};
+            document.getElementById('grandTotal').innerText = ₹${grandTotal.toFixed(2)};
+
+            closeModal('bookingModal');
+            document.getElementById('billModal').style.display = "block";
+        }
+
+        function makePayment() {
+            alert("Payment has been initiated!");
+            closeModal('billModal');
+        }
+    </script>
+
+</body>
+</html>

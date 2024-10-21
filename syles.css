@@ -1,0 +1,89 @@
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Prociono', sans-serif; /* Use the specified font */
+    }
+
+    .container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+    .left-side {
+        width: 50%; /* Left side occupies 50% of the width */
+        height: 100%;
+    }
+
+    .left-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .right-side {
+        width: 50%; /* Right side occupies 50% of the width */
+        height: 100%;
+        position: relative; /* Set position relative to position child elements */
+    }
+
+    .text-image-container {
+        width: 100%; /* Full width */
+        height: 50%; /* Take half of the right side */
+        overflow: hidden; /* Hide any overflow */
+    }
+
+    .text-image {
+        width: 100%; /* Make image take full width */
+        height: 100%; /* Make image take full height */
+        object-fit: cover; /* Ensure image covers the container */
+    }
+
+    .text-box {
+        position: absolute; /* Position absolutely to fill remaining space */
+        bottom: 0; /* Align to the bottom */
+        left: 0; /* Align to the left */
+        width: 100%; /* Full width */
+        height: 50%; /* Fill the remaining height */
+        padding: 20px; /* Add padding */
+        color: #333; /* Text color */
+        background-color:#DACDBD; /* Set background color for the text box to a brown theme */
+        display: flex; /* Use flexbox to center content */
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: flex-end; /* Align to the bottom of the text box */
+        align-items: center; /* Center horizontally */
+        text-align: center; /* Center text */
+        z-index: 1; /* Ensure it appears above the image */
+    }
+
+    .quote {
+        font-size: 24px; /* Make the quote larger */
+        font-weight: bold; /* Make the quote bold */
+        margin-bottom: 85px; /* Reduce the space below the quote */
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #7C4D30; /* Button background color to match the brown theme */
+        color: white; /* Text color for the button */
+        border: none; /* Remove default button border */
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer; /* Change cursor to pointer */
+        margin-top: 10px; /* Space between quote and button */
+    }
+
+    .button:hover {
+        background-color: #5D4037; /* Darker brown on hover */
+    }

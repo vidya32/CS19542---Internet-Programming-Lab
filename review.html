@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revvo</title>
+    <link rel="icon" href="lgoo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('back review.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            overflow-y: scroll; /* Enable vertical scrolling */
+            height: 100vh; /* Full viewport height */
+        }
+
+        /* Header styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: brown; /* Header color */
+            padding: 10px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed; /* Keep header fixed at the top */
+            top: 0; /* Position at the top */
+            left: 0; /* Align to the left edge */
+            width: 100%; /* Full width */
+            z-index: 1000; /* Ensure the header is above other elements */
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .header img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .header nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #fff; /* Link color */
+            font-size: 16px;
+        }
+
+        .header nav a:hover {
+            color: #FFD700; /* Hover color */
+        }
+
+        /* Main review container */
+        .container {
+            padding: 80px 30px 20px; /* Space for fixed header */
+            margin-top: 70px; /* Space for the button */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns for reviews */
+            gap: 20px; /* Space between reviews */
+        }
+
+        .review-box {
+            background-color: rgba(255, 255, 255, 0.9); /* Lighter transparent white */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .review-box p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .review-box .review-author {
+            font-size: 12px;
+            color: #888;
+            text-align: right;
+        }
+
+        .stars {
+            color: #FFD700; /* Star color for selected */
+            margin-bottom: 10px;
+        }
+
+        /* Write a Review Button */
+        .write-review {
+            background-color: #FFD700; /* Button color */
+            color: black;
+            padding: 10px 15px; /* Reduced padding for smaller button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px; /* Smaller font size */
+            text-decoration: none;
+            display: block;
+            position: fixed; /* Keep the button fixed */
+            top: 107px; /* Position below the header */
+            right: 30px; /* Position towards the right corner */
+            z-index: 1001; /* Ensure button is above other elements */
+        }
+
+        .write-review:hover {
+            background-color: #FFA500; /* Darker yellow on hover */
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto; /* Center vertically */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 600px; /* Increased width of the modal */
+            border-radius: 10px;
+        }
+
+        .modal-content h2 {
+            margin: 0 0 10px 0;
+        }
+
+        .modal-content input, 
+        .modal-content textarea {
+            width: 96%; /* Full width */
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: space-between;
+            width: 100px; /* Width of the stars section */
+            margin-bottom: 10px;
+        }
+
+        .star {
+            cursor: pointer;
+            font-size: 24px; /* Star size */
+            color: #ccc; /* Star color initially unselected */
+        }
+
+        /* Submit Button styling */
+        .submit-button {
+            background-color: #FFD700; /* Button color */
+            color: black;
+            padding: 10px 15px; /* Padding for button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px; /* Font size for button */
+            display: block;
+            margin: 20px auto; /* Center button */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <img src="lgoo.png" alt="Revvo Logo">
+            <h1>Revvo</h1>
+        </div>
+        <nav>
+            <a href="front.html">Home</a>
+            <a href="vehicles.html">Vehicles</a>
+            <a href="review.html">Review</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <!-- Submit Button -->
+    <button class="write-review" onclick="openModal()">Leave Us a Review</button>
+
+    <!-- Main Review Section -->
+    <div class="container" id="reviewContainer">
+        <!-- Review 1 -->
+        <div class="review-box">
+            <div class="stars">★★★★☆</div>
+            <h3>Amazing Service!</h3>
+            <p>I had a fantastic experience with Revvo. The booking process was smooth, and the vehicle was in great condition. Highly recommended!</p>
+            <p class="review-author">- John Doe</p>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-box">
+            <div class="stars">★★★★★</div>
+            <h3>Quick and Easy Rental</h3>
+            <p>Revvo made the rental process incredibly quick and easy. I got the vehicle I wanted, and the staff was very friendly. Will definitely use it again.</p>
+            <p class="review-author">- Jane Smith</p>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-box">
+            <div class="stars">★★★★☆</div>
+            <h3>Excellent Customer Support</h3>
+            <p>I faced a minor issue with my vehicle, but Revvo's customer support resolved it in no time. Great experience overall!</p>
+            <p class="review-author">- Michael Brown</p>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="review-box">
+            <div class="stars">★★★★★</div>
+            <h3>Great Value for Money</h3>
+            <p>I was pleasantly surprised by the affordable rates and the high quality of service. I'll be a returning customer!</p>
+            <p class="review-author">- Emily White</p>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="review-box">
+            <div class="stars">★★★★☆</div>
+            <h3>Will Rent Again!</h3>
+            <p>The vehicle was clean and well-maintained. The pickup process was seamless. Highly recommend Revvo for rentals!</p>
+            <p class="review-author">- David Green</p>
+        </div>
+
+        <!-- Review 6 -->
+        <div class="review-box">
+            <div class="stars">★★★★★</div>
+            <h3>Friendly Staff</h3>
+            <p>The staff at Revvo was incredibly helpful and made my rental experience enjoyable. Thank you for the great service!</p>
+            <p class="review-author">- Sarah Black</p>
+        </div>
+    </div>
+
+    <!-- Modal for submitting review -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <h2>Leave a Review</h2>
+            <div class="stars">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <input type="text" id="reviewerName" placeholder="Your Name" required>
+            <textarea id="reviewText" rows="4" placeholder="Write your review..." required></textarea>
+            <button class="submit-button" onclick="submitReview()">Submit Review</button>
+            
+        </div>
+    </div>
+
+    <script>
+        let rating = 0;
+
+        // Function to open the modal
+        function openModal() {
+            document.getElementById("reviewModal").style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("reviewModal").style.display = "none";
+            resetModal();
+        }
+
+        // Function to submit the review
+        function submitReview() {
+            const name = document.getElementById("reviewerName").value;
+            const review = document.getElementById("reviewText").value;
+
+            if (name && review) {
+                const reviewContainer = document.getElementById("reviewContainer");
+                const newReview = document.createElement("div");
+                newReview.className = "review-box";
+                newReview.innerHTML = `<div class="stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+                                       <h3>${name}</h3>
+                                       <p>${review}</p>
+                                       <p class="review-author">- ${name}</p>`;
+                reviewContainer.prepend(newReview); // Add new review to the top
+                closeModal();
+            }
+        }
+
+        // Function to reset modal inputs
+        function resetModal() {
+            document.getElementById("reviewerName").value = '';
+            document.getElementById("reviewText").value = '';
+            rating = 0;
+            updateStars();
+        }
+
+        // Function to update star rating
+        function updateStars() {
+            const stars = document.querySelectorAll(".star");
+            stars.forEach(star => {
+                star.style.color = star.dataset.value <= rating ? "#FFD700" : "#ccc";
+            });
+        }
+
+        // Event listener for star clicks
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                rating = this.dataset.value;
+                updateStars();
+            });
+        });
+
+        // Close modal on clicking outside of modal content
+        window.onclick = function(event) {
+            const modal = document.getElementById("reviewModal");
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
