@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +17,7 @@
             color: black; /* Change text color for better readability */
         }
         .header {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: brown;
             padding: 10px;
             text-align: center;
         }
@@ -43,21 +42,21 @@
             padding: 20px;
         }
         .vehicle-box {
-            width: 200px; /* Increased width */
-            height: 300px; /* Increased height */
+            width: 200px;
+            height: 300px;
             margin: 15px;
             text-align: center;
             cursor: pointer;
             border: 2px solid #ddd;
             border-radius: 8px;
-            background-color: white; /* Solid background */
+            background-color: white;
             transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Added shadow for depth */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         .vehicle-box img {
             width: 100%;
-            height: 150px; /* Adjusted height to fit better */
-            object-fit: contain; /* Prevents image zooming and cropping */
+            height: 150px;
+            object-fit: contain;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
@@ -67,7 +66,7 @@
         }
         .vehicle-box p {
             margin: 5px 0;
-            font-weight: 500; /* Added bold for better visibility */
+            font-weight: 500;
         }
         .proceed-button {
             margin-top: 10px;
@@ -80,20 +79,20 @@
             position: fixed;
             right: 20px;
             bottom: 20px;
-            border-radius: 8px; /* Rounded corners */
+            border-radius: 8px;
         }
         .proceed-button:hover {
             background-color: #555;
         }
         /* Modal Styles */
         .modal {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed; 
             z-index: 1; 
             left: 0;
             top: 0;
             width: 100%; 
-            height: 100%; 
+            height: 100%;
             overflow: auto; 
             background-color: rgb(0,0,0); 
             background-color: rgba(0,0,0,0.4); 
@@ -105,7 +104,7 @@
             padding: 20px;
             border: 1px solid #888;
             width: 80%; 
-            max-width: 500px; /* Adjust as necessary */
+            max-width: 500px;
             border-radius: 8px;
         }
         .close {
@@ -141,7 +140,7 @@
 <body>
 
     <div class="header">
-        <img src="lgoo.png" alt="Revvo Logo" style="height: 50px;"> <!-- Change to your logo -->
+        <img src="lgoo.png" alt="Revvo Logo" style="height: 50px;">
         <h1>Revvo</h1>
         <div class="nav-links">
             <a href="front.html">Home</a>
@@ -247,18 +246,8 @@
                 <input type="email" id="email" required>
             </div>
             <div class="form-group">
-                <label for="pickup">Pickup Point:</label>
-                <input type="text" id="pickup" required>
-            </div>
-            <div class="form-group">
-                <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate" required>
-                <input type="time" id="startTime" required>
-            </div>
-            <div class="form-group">
-                <label for="endDate">End Date:</label>
-                <input type="date" id="endDate" required>
-                <input type="time" id="endTime" required>
+                <label for="numDays">Number of Days:</label>
+                <input type="number" id="numDays" required>
             </div>
             <button onclick="generateBill()">Generate Bill</button>
         </div>
@@ -297,7 +286,6 @@
 
     <script>
         let selectedVehicles = [];
-        let totalDays = 0;
 
         function selectVehicle(element, name, fare, duration) {
             if (element.classList.contains('selected')) {
@@ -325,17 +313,12 @@
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
-            const pickup = document.getElementById('pickup').value;
-            const startDate = new Date(document.getElementById('startDate').value + ' ' + document.getElementById('startTime').value);
-            const endDate = new Date(document.getElementById('endDate').value + ' ' + document.getElementById('endTime').value);
+            const numDays = document.getElementById('numDays').value;
             
-            if (!name || !phone || !email || !pickup || !startDate || !endDate) {
+            if (!name || !phone || !email || !numDays) {
                 alert("Please fill in all fields.");
                 return;
             }
-
-            // Calculate total days
-            totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
             const billTableBody = document.getElementById('billTableBody');
             billTableBody.innerHTML = ''; // Clear previous entries
@@ -343,31 +326,32 @@
             let totalFare = 0;
 
             selectedVehicles.forEach(vehicle => {
-                const fare = vehicle.fare * totalDays;
-                totalFare += fare;
-                billTableBody.innerHTML += 
-                    <tr>
-                        <td>${vehicle.name}</td>
-                        <td>₹${vehicle.fare}</td>
-                        <td>${totalDays}</td>
-                        <td>₹${fare}</td>
-                    </tr>
-                ;
+                const vehicleTotal = vehicle.fare * numDays;
+                totalFare += vehicleTotal;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${vehicle.name}</td>
+                    <td>₹${vehicle.fare}</td>
+                    <td>${numDays}</td>
+                    <td>₹${vehicleTotal}</td>
+                `;
+                billTableBody.appendChild(row);
             });
 
-            const gst = totalFare * 0.18;
-            const grandTotal = totalFare + gst;
+            const gstAmount = totalFare * 0.18;
+            const grandTotal = totalFare + gstAmount;
 
-            document.getElementById('gstAmount').innerText = ₹${gst.toFixed(2)};
-            document.getElementById('grandTotal').innerText = ₹${grandTotal.toFixed(2)};
+            document.getElementById('gstAmount').textContent = `₹${gstAmount.toFixed(2)}`;
+            document.getElementById('grandTotal').textContent = `₹${grandTotal.toFixed(2)}`;
 
             closeModal('bookingModal');
             document.getElementById('billModal').style.display = "block";
         }
 
         function makePayment() {
-            alert("Payment has been initiated!");
-            closeModal('billModal');
+            alert("Redirecting to payment gateway...");
+            // Add logic for payment
         }
     </script>
 
